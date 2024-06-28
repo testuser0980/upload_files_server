@@ -31,7 +31,7 @@ const File = mongoose.model("File", fileSchema);
 // Configure Multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "https://12panel.axiomworld.net/uploads/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -42,7 +42,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Serve static files from the uploads directory
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "https://12panel.axiomworld.net/uploads")));
 
 // Endpoint to upload files
 app.post("/upload", upload.single("file"), async (req, res) => {
