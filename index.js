@@ -9,7 +9,7 @@ app.use(cors());
 const port = 5000;
 
 // Ensure uploads directory exists
-const uploadDir = path.join(__dirname, "uploads");
+const uploadDir = path.join("https://12panel.axiomworld.net/", "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
