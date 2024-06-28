@@ -9,7 +9,7 @@ app.use(cors());
 const port = 5000;
 
 // Ensure uploads directory exists
-const uploadDir = path.join("https://12panel.axiomworld.net/", "uploads");
+const uploadDir = path.join("https://gvgvkto7w5dmsabg.public.blob.vercel-storage.com/", "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
@@ -31,7 +31,7 @@ const File = mongoose.model("File", fileSchema);
 // Configure Multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "https://12panel.axiomworld.net/uploads/");
+    cb(null, "https://gvgvkto7w5dmsabg.public.blob.vercel-storage.com/uploads/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -42,7 +42,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Serve static files from the uploads directory
-app.use("/uploads", express.static(path.join(__dirname, "https://12panel.axiomworld.net/uploads")));
+app.use("/uploads", express.static(path.join("https://gvgvkto7w5dmsabg.public.blob.vercel-storage.com/", "uploads")));
 
 // Endpoint to upload files
 app.post("/upload", upload.single("file"), async (req, res) => {
