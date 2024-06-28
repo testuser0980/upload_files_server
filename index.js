@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/fileuploads", {
+mongoose.connect("mongodb+srv://testuser0980:4CVBBtKZ5vgwzv7I@cluster0.w3nyd03.mongodb.net/upload_file?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
