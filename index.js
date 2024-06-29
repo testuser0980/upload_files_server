@@ -31,7 +31,7 @@ const File = mongoose.model("File", fileSchema);
 // Configure Multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, fs.readdirSync(uploadDir));
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
     // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -42,6 +42,10 @@ const storage = multer.diskStorage({
 // const storage = multer.memoryStorage()
 
 const upload = multer({ storage: storage });
+
+fs.readdirSync(uploadDir).map(fileName => {
+  return path.join(uploadDir, fileName);
+})
 
 // Serve static files from the uploads directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
