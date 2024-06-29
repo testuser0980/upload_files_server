@@ -1,4 +1,5 @@
 const express = require("express");
+import { put } from "@vercel/blob";
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
@@ -64,6 +65,21 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
+app.post('/upload/file', async (req, res) => {
+  try {
+    const { url } = await put('articles/blob.txt', 'Hello World!', { access: 'public' });
+    return res.status(200).send({
+      success: true,
+      url,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: error,
+    })
+  }
+})
 
 app.get("/");
 
