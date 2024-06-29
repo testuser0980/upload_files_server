@@ -9,10 +9,12 @@ app.use(cors());
 const port = 5000;
 
 // Ensure uploads directory exists
-const uploadDir = path.join("https://gvgvkto7w5dmsabg.public.blob.vercel-storage.com/", "uploads");
+const uploadDir = "uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
+
+fs.readdirSync(uploadDir);
 
 // Connect to MongoDB
 mongoose.connect("mongodb+srv://testuser0980:4CVBBtKZ5vgwzv7I@cluster0.w3nyd03.mongodb.net/upload_file?retryWrites=true&w=majority", {
@@ -31,7 +33,7 @@ const File = mongoose.model("File", fileSchema);
 // Configure Multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "https://gvgvkto7w5dmsabg.public.blob.vercel-storage.com/uploads/");
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -42,7 +44,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Serve static files from the uploads directory
-app.use("/uploads", express.static(path.join("https://gvgvkto7w5dmsabg.public.blob.vercel-storage.com/", "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Endpoint to upload files
 app.post("/upload", upload.single("file"), async (req, res) => {
