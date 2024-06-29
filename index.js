@@ -14,8 +14,6 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-fs.readdirSync(uploadDir);
-
 // Connect to MongoDB
 mongoose.connect("mongodb+srv://testuser0980:4CVBBtKZ5vgwzv7I@cluster0.w3nyd03.mongodb.net/upload_file?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -31,15 +29,17 @@ const fileSchema = new mongoose.Schema({
 const File = mongoose.model("File", fileSchema);
 
 // Configure Multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(__dirname, "uploads/");
+//   },
+//   filename: function (req, file, cb) {
+//     // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+//     cb(__dirname, file.originalname);
+//   },
+// });
+
+const storage = multer.memoryStorage()
 
 const upload = multer({ storage: storage });
 
