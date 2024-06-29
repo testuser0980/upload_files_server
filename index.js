@@ -29,17 +29,17 @@ const fileSchema = new mongoose.Schema({
 const File = mongoose.model("File", fileSchema);
 
 // Configure Multer storage
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(__dirname, "uploads/");
-//   },
-//   filename: function (req, file, cb) {
-//     // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-//     cb(__dirname, file.originalname);
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, fs.readdirSync(folderPath));
+  },
+  filename: function (req, file, cb) {
+    // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.originalname);
+  },
+});
 
-const storage = multer.memoryStorage()
+// const storage = multer.memoryStorage()
 
 const upload = multer({ storage: storage });
 
